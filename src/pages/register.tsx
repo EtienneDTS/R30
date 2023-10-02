@@ -1,11 +1,11 @@
-import React from 'react';
 import style from '../styles/login.module.scss'
+import React from 'react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 type RegisterProps = {
-
+    
 }
 
 const register: React.FC<RegisterProps> = () => {
@@ -49,7 +49,7 @@ const register: React.FC<RegisterProps> = () => {
     }
 
     async function formValid() {
-        let valid = true;
+        let valid : boolean = true;
         const newErrors = { ...formErrors };
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%\^\&*\)\(+=._-]).{8,}$/;
 
