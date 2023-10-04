@@ -3,16 +3,64 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
-    url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-    id        Int     @id @default(autoincrement())
-    email     String  @unique
-    password  String
-    firstName String
-    lastName  String
-    userName  String
-    isAdmin   Boolean @default(false)
+  id        Int     @id @default(autoincrement())
+  email     String  @unique
+  password  String
+  firstName String
+  lastName  String
+  userName  String
+  isAdmin   Boolean @default(false)
+
+  Routine Routine[]
+}
+
+model Objectives {
+  id                  Int     @id @default(autoincrement())
+  objective1          String?
+  objective2          String?
+  objective3          String?
+  objective4          String?
+  objective5          String?
+  objectiveAchievied1 Boolean @default(false)
+  objectiveAchievied2 Boolean @default(false)
+  objectiveAchievied3 Boolean @default(false)
+  objectiveAchievied4 Boolean @default(false)
+  objectiveAchievied5 Boolean @default(false)
+  morningHabit        String
+  eveningHabit        String
+
+  Routine Routine?
+}
+
+model Routine {
+  id           Int         @id @default(autoincrement())
+  Name         String      @default("Routine")
+  dateStart    String //à modifier pour postgres
+  dateEnd      String //à modifier pour postgres
+  finished     Boolean     @default(false)
+  objectives   Objectives? @relation(fields: [objectivesId], references: [id])
+  objectivesId Int?        @unique
+  user         User        @relation(fields: [userId], references: [id])
+  userId       Int
+
+  dailyForm DailyForm?
+}
+
+model DailyForm {
+  id           Int     @id @default(autoincrement())
+  diary        String? //à modifier pour postgres
+  date         String
+  dayRating    Int
+  WakingUpHour String
+  bedtimeHour  String
+  morningHabit Boolean @default(false)
+  eveningHabit Boolean @default(false)
+  routine      Routine @relation(fields: [routineId], references: [id])
+  routineId    Int     @unique
+  rightPath    Boolean @default(false)
 }
