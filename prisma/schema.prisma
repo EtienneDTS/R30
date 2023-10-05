@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -20,28 +20,28 @@ model User {
 }
 
 model Objectives {
-  id                  Int     @id @default(autoincrement())
-  objective1          String?
-  objective2          String?
-  objective3          String?
-  objective4          String?
-  objective5          String?
-  objectiveAchievied1 Boolean @default(false)
-  objectiveAchievied2 Boolean @default(false)
-  objectiveAchievied3 Boolean @default(false)
-  objectiveAchievied4 Boolean @default(false)
-  objectiveAchievied5 Boolean @default(false)
-  morningHabit        String
-  eveningHabit        String
+  id                 Int     @id @default(autoincrement())
+  objective1         String?
+  objective2         String?
+  objective3         String?
+  objective4         String?
+  objective5         String?
+  objectiveAchieved1 Boolean? @default(false)
+  objectiveAchieved2 Boolean? @default(false)
+  objectiveAchieved3 Boolean? @default(false)
+  objectiveAchieved4 Boolean? @default(false)
+  objectiveAchieved5 Boolean? @default(false)
+  morningHabit       String?
+  eveningHabit       String?
 
   Routine Routine?
 }
 
 model Routine {
   id           Int         @id @default(autoincrement())
-  Name         String      @default("Routine")
-  dateStart    String //à modifier pour postgres
-  dateEnd      String //à modifier pour postgres
+  name         String      @default("Routine")
+  dateStart    DateTime    @db.Date
+  dateEnd      DateTime    @db.Date
   finished     Boolean     @default(false)
   objectives   Objectives? @relation(fields: [objectivesId], references: [id])
   objectivesId Int?        @unique
@@ -52,15 +52,16 @@ model Routine {
 }
 
 model DailyForm {
-  id           Int     @id @default(autoincrement())
-  diary        String? //à modifier pour postgres
-  date         String
-  dayRating    Int
-  WakingUpHour String
-  bedtimeHour  String
-  morningHabit Boolean @default(false)
-  eveningHabit Boolean @default(false)
-  routine      Routine @relation(fields: [routineId], references: [id])
-  routineId    Int     @unique
-  rightPath    Boolean @default(false)
+  id           Int      @id @default(autoincrement())
+  dayNumber    Int      
+  diary        String?
+  date         DateTime @db.Date
+  dayRating    Int      @default(0)
+  wakingUpHour DateTime? @db.Time
+  bedtimeHour  DateTime? @db.Time
+  morningHabit Boolean  @default(false)
+  eveningHabit Boolean  @default(false)
+  routine      Routine  @relation(fields: [routineId], references: [id])
+  routineId    Int      @unique
+  rightPath    Boolean?  @default(false)
 }
