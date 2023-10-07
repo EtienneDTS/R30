@@ -12,7 +12,6 @@ export const NavBar: React.FC<NavBarProps> = () => {
         <div className={style.navBar}>
             <ul>
                 <li><Link href={"/"}><div className={style.image}><img src="#" alt="" /></div></Link></li>
-                
                 <li><Link href={"/login"} className={style.link}>Connexion</Link></li>
             </ul>
         </div>

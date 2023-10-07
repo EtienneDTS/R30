@@ -20,7 +20,6 @@ const register: React.FC<RegisterProps> = () => {
     const [formErrors, setFormErrors] = useState({
         email: '',
         password: '',
-        // Ajoutez d'autres champs ici
     });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

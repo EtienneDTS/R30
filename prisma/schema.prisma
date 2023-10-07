@@ -20,12 +20,17 @@ model User {
 }
 
 model Objectives {
-  id                 Int     @id @default(autoincrement())
+  id                 Int      @id @default(autoincrement())
   objective1         String?
   objective2         String?
   objective3         String?
   objective4         String?
   objective5         String?
+  objectiveRanking1  Int?
+  objectiveRanking2  Int?
+  objectiveRanking3  Int?
+  objectiveRanking4  Int?
+  objectiveRanking5  Int?
   objectiveAchieved1 Boolean? @default(false)
   objectiveAchieved2 Boolean? @default(false)
   objectiveAchieved3 Boolean? @default(false)
@@ -45,6 +50,7 @@ model Routine {
   finished     Boolean     @default(false)
   objectives   Objectives? @relation(fields: [objectivesId], references: [id])
   objectivesId Int?        @unique
+  why          String
   user         User        @relation(fields: [userId], references: [id])
   userId       Int
 
@@ -52,16 +58,27 @@ model Routine {
 }
 
 model DailyForm {
-  id           Int      @id @default(autoincrement())
-  dayNumber    Int      
+  id           Int       @id @default(autoincrement())
+  dayNumber    Int
   diary        String?
-  date         DateTime @db.Date
-  dayRating    Int      @default(0)
+  todo1        String?
+  todo2        String?
+  todo3        String?
+  todo4        String?
+  todo5        String?
+  todoChecked1 Boolean @default(false)
+  todoChecked2 Boolean @default(false)
+  todoChecked3 Boolean @default(false)
+  todoChecked4 Boolean @default(false)
+  todoChecked5 Boolean @default(false)
+  todoPriority String?
+  date         DateTime  @db.Date
+  dayRating    Int       @default(0)
   wakingUpHour DateTime? @db.Time
   bedtimeHour  DateTime? @db.Time
-  morningHabit Boolean  @default(false)
-  eveningHabit Boolean  @default(false)
-  routine      Routine  @relation(fields: [routineId], references: [id])
-  routineId    Int      @unique
+  morningHabit Boolean   @default(false)
+  eveningHabit Boolean   @default(false)
+  routine      Routine   @relation(fields: [routineId], references: [id])
+  routineId    Int       @unique
   rightPath    Boolean?  @default(false)
 }
