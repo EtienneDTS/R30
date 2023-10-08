@@ -15,7 +15,6 @@ model User {
   lastName  String
   userName  String
   isAdmin   Boolean @default(false)
-
   Routine Routine[]
 }
 

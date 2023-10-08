@@ -13,6 +13,7 @@ export const NavBar: React.FC<NavBarProps> = () => {
             <ul>
                 <li><Link href={"/"}><div className={style.image}><img src="#" alt="" /></div></Link></li>
                 <li><Link href={"/login"} className={style.link}>Connexion</Link></li>
+                <li><Link href={"/routine/create"} className={style.link}>Créer une routine</Link></li>
             </ul>
         </div>
     );

@@ -1,8 +1,6 @@
-import { PrismaClient } from "@prisma/client"
 import { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from "bcrypt"
-
-const prisma = new PrismaClient();
+import { prisma } from "../../../db";
 
 export default async function createUser(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {

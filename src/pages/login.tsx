@@ -3,8 +3,6 @@ import style from '../styles/login.module.scss'
 import Link from 'next/link';
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import Router from 'next/router';
-import { useSession } from 'next-auth/react';
 
 
 type LogInProps = {
