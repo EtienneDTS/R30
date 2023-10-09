@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import style from "./style.module.scss"
-import { Value } from 'sass';
+
 
 interface formData {
     objective1: string,
@@ -22,7 +22,7 @@ interface formData {
 
 type NoteSelectorProps = {
     data: formData,
-    handleFunction: (name: string, value: String) => void
+    handleFunction: (name: string | null, value: string | null, data?: formData) => void
 }
 
 
@@ -53,14 +53,15 @@ export const NoteSelector: React.FC<NoteSelectorProps> = ({ data, handleFunction
     function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
         const value = e.target.value
         const updatedSelectedOption = [...selectedOption, value];
-        console.log(objectivesList[0], e.target.value)
         e.target.value = ""
+
         const allSelector = document.querySelectorAll(".selector")
-        allSelector.forEach(selector => {
+        allSelector.forEach(async selector => {
             if (selector instanceof HTMLSelectElement) {
 
                 if (selector.value === value && selectedOption.includes(selector.value) && selector.value !== "") {
                     selector.value = ""
+                    data = { ...data, [selector.name]: selector.value }
                 }
             }
         })
@@ -78,8 +79,8 @@ export const NoteSelector: React.FC<NoteSelectorProps> = ({ data, handleFunction
                 setSelectedOption(updatedSelectedOption);
             }
         }
-
-        handleFunction(e.target.name, e.target.value)
+        data = { ...data, [e.target.name]: e.target.value }
+        handleFunction(null, null, data)
     }
 
     return (

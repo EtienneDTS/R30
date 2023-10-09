@@ -1,15 +1,16 @@
 import React from 'react';
 import { NoteSelector } from '@/components/NoteSelector/NoteSelector';
+import { ObjectivesList } from '@/components/ObjectivesList/ObjectivesList';
 import { useState, useEffect } from 'react';
 
 const create = () => {
 
     const [formData, setFormData] = useState({
-        objective1 : "",
-        objective2 : "",
-        objective3 : "",
-        objective4 : "",
-        objective5 : "",
+        objective1: "",
+        objective2: "",
+        objective3: "",
+        objective4: "",
+        objective5: "",
         why: "",
         objectiveRanking1: "",
         objectiveRanking2: "",
@@ -21,27 +22,30 @@ const create = () => {
         name: "",
     })
 
-    useEffect(() => {
-        console.log(formData);
-    }, [formData]);
+    function handleChange(name: string | null, value: string | null, data?:any) {
 
-    function handleChange(name:string, value:String) {
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
+        if (data) {
+            setFormData(data)
+        } else {
+            if (name) {
+                setFormData({
+                    ...formData,
+                    [name]: value,
+                });
+            } 
+        }
     }
 
-    function handleSubmit() {
-        // envoyer le formData à l'api
 
-
+    function handleSubmit(e: any) {
+        e.preventDefault()
+        console.log(formData)
     }
 
     return (
         <div>
             <h1>Définir les objectifs du mois</h1>
-            <form action="" method='POST' onSubmit={()=>handleSubmit()}>
+            <form action="" method='POST' onSubmit={(e) => handleSubmit(e)}>
                 <p>Définir des objectifs mensuels est le meilleur moyen d'atteindre vos rêves et l'occasion de suivre votre progression. </p>
                 <p>Il peut parfois être difficile de décider par où commencer. Voici quelques astuces pour vous aider à définir vos 5 objectifs du mois avec succès :</p>
 
@@ -67,32 +71,7 @@ const create = () => {
 
                 <h2>Prennez de quoi écrire suivez ces étapes, et lorsque vous avez trouvé vos objectifs, écrivez-les ci dessous <span>(maximum 5)</span></h2>
 
-                <div>
-                    <div>
-                        <label htmlFor="objective1">Objectif 1</label>
-                        <input type="text" id='objective1' name='objective1' onChange={(e)=>handleChange(e.target.name, e.target.value)}/>
-                    </div>
-
-                    <div>
-                        <label htmlFor="objective2">Objectif 2</label>
-                        <input type="text" id='objective2' name='objective2' onChange={(e)=>handleChange(e.target.name, e.target.value)}/>
-                    </div>
-
-                    <div>
-                        <label htmlFor="objective3">Objectif 3</label>
-                        <input type="text" id='objective3' name='objective3' onChange={(e)=>handleChange(e.target.name, e.target.value)}/>
-                    </div>
-
-                    <div>
-                        <label htmlFor="objective4">Objectif 4</label>
-                        <input type="text" id='objective4' name='objective4' onChange={(e)=>handleChange(e.target.name, e.target.value)}/>
-                    </div>
-
-                    <div>
-                        <label htmlFor="objective5">Objectif 5</label>
-                        <input type="text" id='objective5' name='objective5' onChange={(e)=>handleChange(e.target.name, e.target.value)}/>
-                    </div>
-                </div>
+                <ObjectivesList label="Objectif" name='objective' handleFunction={handleChange} />
 
                 <h2>Utilisez la Règle des "5 POURQUOI ?"</h2>
 
@@ -121,37 +100,37 @@ const create = () => {
                     </li>
                     <div>
                         <label htmlFor="why">Maintenant definissez votre pourquoi</label>
-                        <input type="text" id='why' name='why' placeholder='Trouver le One Piece et devenir le roi des pirates' onChange={(e)=>handleChange(e.target.name, e.target.value)}/>
+                        <input type="text" id='why' name='why' placeholder='Trouver le One Piece et devenir le roi des pirates' onChange={(e) => handleChange(e.target.name, e.target.value)} />
                     </div>
                 </ul>
 
                 <h2>Maintenant pour chacun des objectifs attribuez un ordre de priorité. (1 étant l'objectif le plus important) </h2>
-                <NoteSelector data={formData} handleFunction={handleChange}/>
+                <NoteSelector data={formData} handleFunction={handleChange} />
 
                 <h1>Plannifiez vos habitudes</h1>
 
                 <h2>Habitude manitale</h2>
                 <p><b>Choisissez par quoi vous commencez la journée.</b> Les matins sont un moment idéal pour investir dans vous-même. Que ce soit par la lecture, l'apprentissage, la réflexion ou l'écoute du vidéo dans une autre langue, les habitudes matinales favorisent la croissance personnelle.</p>
                 <label htmlFor="morningHabit">Votre habitude du matin : </label>
-                <input type="text" id='morningHabit' name='morningHabit' onChange={(e)=>handleChange(e.target.name, e.target.value)}/>
+                <input type="text" id='morningHabit' name='morningHabit' onChange={(e) => handleChange(e.target.name, e.target.value)} />
 
                 <h2>Habitude du soir</h2>
                 <p><b>L'occasion de vous préparer à dormir.</b> Une routine nocturne bien planifiée signale à votre corps qu'il est temps de se détendre et de se préparer à dormir. Cela favorise un sommeil de meilleure qualité. Alors prevoyez une activitez ne faisant appelle qu'à un seul sens comme la lecture, ou l'écoute d'un podcast.</p>
                 <label htmlFor="eveningHabit">Votre habitude du soir : </label>
-                <input type="text" id='eveningHabit' name='eveningHabit' onChange={(e)=>handleChange(e.target.name, e.target.value)}/>
+                <input type="text" id='eveningHabit' name='eveningHabit' onChange={(e) => handleChange(e.target.name, e.target.value)} />
 
                 <div>
-                    <input type="checkbox" required/>  
+                    <input type="checkbox" required />
                     <span>En cochant cette case vous vous engagez à tenir votre routine pour une durée d'un mois ainsi que remplir votre fiche journalière une fois par jour.</span>
-                
+
                 </div>
 
                 <h2>Choisissez un nom pour votre routine.</h2>
                 <p>Un nom peut transformer votre routine en un rituel personnel. Les rituels ont une signification et une symbolique profondes, ce qui peut rendre vos activités quotidiennes plus significatives et satisfaisantes.</p>
                 <label htmlFor="name">Le nom de ma routine : </label>
-                <input type="text" id='name' name='name' onChange={(e)=>handleChange(e.target.name, e.target.value)}/>
+                <input type="text" id='name' name='name' onChange={(e) => handleChange(e.target.name, e.target.value)} />
                 <div><button type='submit'>Créer ma routine</button></div>
-                
+
             </form>
         </div>
     );
