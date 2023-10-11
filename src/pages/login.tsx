@@ -1,8 +1,11 @@
 import React from 'react';
 import style from '../styles/login.module.scss'
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { signIn } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import GoogleButton from "react-google-button"
 
 
 type LogInProps = {
@@ -11,51 +14,33 @@ type LogInProps = {
 
 const login: React.FC<LogInProps> = () => {
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [error, setError] = useState('')
+    const { data: session } = useSession()
+    console.log(session)
+    const router = useRouter()
 
-    async function handleForm(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault()
-        const res = await signIn("credentials", {
-            email,
-            password,
-            redirect: false
-        })
 
-        if (!res) {
-            setError("L'utilisateur n'existe pas ou le mot de passe est incorrect")
+
+    async function handleClick(provider: string) {
+        signIn(provider)
+        console.log(session)
+        if (session) {
+            router.push("/")
         }
+
     }
 
 
     return (
         <div>
-            <div className={style.formContainer}>
-                <form action="" onSubmit={handleForm}>
-                    {error && <div className={style.error}>{error}</div>}
-                    <div>
-                        <label htmlFor="email"></label>
-                        <input
-                            type="email"
-                            id='email'
-                            placeholder='email'
-                            required
-                            onChange={(e) => { setEmail(e.target.value) }} />
-                    </div>
-                    <div>
-                        <label htmlFor="password"></label>
-                        <input
-                            type="password"
-                            id='password'
-                            placeholder='password'
-                            required
-                            onChange={(e) => { setPassword(e.target.value) }} />
-                    </div>
-                    <div>Pas encore de compte ? <Link href={"/register"}>S'inscrire</Link> </div>
-                    <button type="submit">Connexion</button>
-                </form>
+            <div className={style.container}>
+                <h1>Me connecter</h1>
+                <GoogleButton
+                    onClick={() => handleClick("google")}
+                    type={"light"}
+                />
+
             </div>
+
         </div>
     );
 };

@@ -1,7 +1,8 @@
 import React from 'react';
 import { NoteSelector } from '@/components/NoteSelector/NoteSelector';
 import { ObjectivesList } from '@/components/ObjectivesList/ObjectivesList';
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react';
 
 const create = () => {
 
@@ -22,7 +23,7 @@ const create = () => {
         name: "",
     })
 
-    function handleChange(name: string | null, value: string | null, data?:any) {
+    function handleChange(name: string | null, value: string | null, data?: any) {
 
         if (data) {
             setFormData(data)
@@ -32,7 +33,7 @@ const create = () => {
                     ...formData,
                     [name]: value,
                 });
-            } 
+            }
         }
     }
 
@@ -40,6 +41,9 @@ const create = () => {
     function handleSubmit(e: any) {
         e.preventDefault()
         console.log(formData)
+        const {data : session} = useSession()
+        console.log(session)
+
     }
 
     return (

@@ -8,6 +8,7 @@ type ObjectivesListProps = {
 }
 
 export const ObjectivesList: React.FC<ObjectivesListProps> = ({ label, name, handleFunction }) => {
+
     return (
         <div>
             <div>
@@ -15,10 +16,14 @@ export const ObjectivesList: React.FC<ObjectivesListProps> = ({ label, name, han
                 <input type="text" id={`${name}1`} name={`${name}1`} onChange={(e) => handleFunction(e.target.name, e.target.value)} />
             </div>
 
+
             <div>
                 <label htmlFor={`${name}2`}>{label} 2</label>
                 <input type="text" id={`${name}2`} name={`${name}2`} onChange={(e) => handleFunction(e.target.name, e.target.value)} />
             </div>
+
+
+
 
             <div>
                 <label htmlFor={`${name}3`}>{label} 3</label>
