@@ -2,7 +2,7 @@ import React from 'react';
 import style from '../styles/login.module.scss'
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { signIn } from 'next-auth/react';
+import { signIn, signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import GoogleButton from "react-google-button"
@@ -40,6 +40,7 @@ const login: React.FC<LogInProps> = () => {
                 />
 
             </div>
+            <button onClick={()=>signOut()}>deconnecter</button>
 
         </div>
     );

@@ -23,7 +23,8 @@
     "react-dom": "18.2.0",
     "react-google-button": "^0.7.2",
     "sass": "^1.66.1",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "prisma": "^5.4.1"
