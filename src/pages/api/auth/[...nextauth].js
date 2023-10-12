@@ -2,10 +2,6 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { prisma } from "../../../../db";
 
-
-
-
-
 export default NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
@@ -49,22 +45,30 @@ export default NextAuth({
         });
 
         if (!signUser) {
-          const userName = `${sessionUser.firstName} ${sessionUser.lastName.charAt(0)}`;
-          const newUser = await prisma.user.create({
-            data: {
-              email: sessionUser.email,
-              provider: sessionUser.provider,
-              firstName: sessionUser.firstName,
-              lastName: sessionUser.lastName,
-              userName: userName,
-            }
-          });
-          sessionUser.userName = userName;
-          sessionUser.id = newUser.id;
-        } else { 
+          if (sessionUser.firstName || sessionUser.lastName) {
+            const userName = `${sessionUser.firstName} ${sessionUser.lastName.charAt(0)}`;
+          } else { const userName = "Anonyme"; }
+
+          try {
+            const newUser = await prisma.user.create({
+              data: {
+                email: sessionUser.email,
+                provider: sessionUser.provider,
+                firstName: sessionUser.firstName,
+                lastName: sessionUser.lastName,
+                userName: userName,
+              }
+            });
+            sessionUser.userName = userName;
+            sessionUser.id = newUser.id;
+          } catch (error) {
+            console.error("Erreur lors de la création de l'utilisateur :", error);
+            throw error;
+          }
+        } else {
           sessionUser.userName = signUser.userName;
           sessionUser.id = signUser.id;
-         }
+        }
       }
       return session;
     },
