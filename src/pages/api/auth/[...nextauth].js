@@ -62,7 +62,6 @@ export default NextAuth({
             sessionUser.userName = userName;
             sessionUser.id = newUser.id;
           } catch (error) {
-            console.error("Erreur lors de la création de l'utilisateur :", error);
             throw error;
           }
         } else {

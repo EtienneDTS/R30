@@ -1,28 +1,77 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from "../../../db";
+import { escape } from 'querystring';
 
 export default async function createRoutine(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
-        console.log(req.body);
+
         
-        
-    //     try {
-    //         const user = await prisma.user.create({
-    //             data: {
-    //                 email: email,
-    //                 firstName: firstName,
-    //                 lastName: lastName,
-    //                 userName: userName,
-    //             },
-    //         });
+
+        const data = req.body.formData
+        data.id = req.body.userID
+        data.currentDate = req.body.dates.currentDate
+        data.dateEnd = req.body.dates.currentDatePlus30Days
+
+        const user = await prisma.user.findUnique({
+            where: {
+                id: data.id
+            }
+        })
+        if (!user) {
+            return res.status(404).json({ success: false, error: "Utilisateur non trouvé" });
+        }
+
+        const currentUserRoutine = await prisma.routine.findFirst({
+            where: {
+                AND: [{ finished: false }, { userId: data.id }]
+            }
+        })
+
+        if (currentUserRoutine) {
+            return res.status(400).json({ success: false, error: "Une routine est en cour." });
+        } 
 
 
-    //         res.status(201).json({ message: 'Utilisateur créé avec succès' });
-    //     } catch (error) {
-    //         console.error(error);
-    //         res.status(500).json({ message: 'Une erreur s\'est produite lors de la création de l\'utilisateur' });
-    //     }
-    // } else {
-    //     res.status(405).end();
+        let newObjectives;
+        try {
+            newObjectives = await prisma.objectives.create({
+                data: {
+                    objective1: data.objective1,
+                    objective2: data.objective2,
+                    objective3: data.objective3,
+                    objective4: data.objective4,
+                    objective5: data.objective5,
+                    objectiveRanking1: parseInt(data.objectiveRanking1),
+                    objectiveRanking2: parseInt(data.objectiveRanking2),
+                    objectiveRanking3: parseInt(data.objectiveRanking3),
+                    objectiveRanking4: parseInt(data.objectiveRanking4),
+                    objectiveRanking5: parseInt(data.objectiveRanking5),
+                    morningHabit: data.morningHabit,
+                    eveningHabit: data.eveningHabit
+                }
+            })
+        } catch (error) {
+            console.error("erreur lors de la creation des objets,", error)
+            return res.status(404).json({ success: false, error: "La création des objectifs à échoué" });
+        }
+
+        try {
+            
+            const newRoutine = await prisma.routine.create({
+                data: {
+                    name: data.name,
+                    dateStart: data.currentDate,
+                    dateEnd: data.dateEnd,
+                    why: data.why,
+                    userId: data.id,
+                    objectivesId: newObjectives.id
+                }
+            })
+
+        } catch (error) {
+            return res.status(500).json({ success: false, error: "Erreur interne du serveur" })
+        }
+
+        res.json({ success: true, message: "Requête réussie" });
     }
 }

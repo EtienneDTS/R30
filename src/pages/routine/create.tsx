@@ -6,7 +6,26 @@ import { useSession } from 'next-auth/react';
 
 const create = () => {
 
-    const [formData, setFormData] = useState({
+    const { data: session } = useSession()
+    interface FormDataTypes {
+        objective1: string;
+        objective2: string;
+        objective3: string;
+        objective4: string;
+        objective5: string;
+        why: string;
+        objectiveRanking1: string;
+        objectiveRanking2: string;
+        objectiveRanking3: string;
+        objectiveRanking4: string;
+        objectiveRanking5: string;
+        morningHabit: string;
+        eveningHabit: string;
+        name: string;
+
+    }
+
+    const [formData, setFormData] = useState<FormDataTypes>({
         objective1: "",
         objective2: "",
         objective3: "",
@@ -21,6 +40,7 @@ const create = () => {
         morningHabit: "",
         eveningHabit: "",
         name: "",
+
     })
 
     function handleChange(name: string | null, value: string | null, data?: any) {
@@ -37,12 +57,69 @@ const create = () => {
         }
     }
 
+    async function fetchFormData(formData: FormDataTypes, userID: number, dates: object) {
+        const dataToFetch = {
+            formData: formData,
+            userID: userID,
+            dates: dates,
+        }
+        try {
+            const response = await fetch('../api/createRoutine', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+
+                },
+                body: JSON.stringify(dataToFetch)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Réponse inattendue : ${response.status}`);
+            }
+
+            const data = await response.json();
+            return { success: true, data }
+        }
+        catch (error) {
+            // Gérer les erreurs
+            console.error('Une erreur s\'est produite :', error);
+            return { success: false, error }
+        }
+    }
+
 
     function handleSubmit(e: any) {
         e.preventDefault()
-        console.log(formData)
-        const {data : session} = useSession()
-        console.log(session)
+
+        if (session) {
+            const userID = session.session.user.id
+            const currentDate = new Date()
+            const currentDatePlus30Days = new Date()
+            currentDatePlus30Days.setDate(currentDatePlus30Days.getDate() + 30)
+
+            const dates = {currentDate, currentDatePlus30Days}
+            console.log(currentDate)
+
+            fetchFormData(formData, userID, dates)
+                .then((result) => {
+                    if (result.success) {
+                        
+                        console.log("Requête réussie", result.data);
+                    } else {
+                        console.log(result.error);
+                    }
+                })
+
+        }
+
+
+
+
+
+
+
+
+
 
     }
 
@@ -104,7 +181,7 @@ const create = () => {
                     </li>
                     <div>
                         <label htmlFor="why">Maintenant definissez votre pourquoi</label>
-                        <input type="text" id='why' name='why' placeholder='Trouver le One Piece et devenir le roi des pirates' onChange={(e) => handleChange(e.target.name, e.target.value)} />
+                        <input type="text" id='why' name='why' placeholder='Trouver le One Piece et devenir le roi des pirates' onChange={(e) => handleChange(e.target.name, e.target.value)} required />
                     </div>
                 </ul>
 
@@ -116,12 +193,12 @@ const create = () => {
                 <h2>Habitude manitale</h2>
                 <p><b>Choisissez par quoi vous commencez la journée.</b> Les matins sont un moment idéal pour investir dans vous-même. Que ce soit par la lecture, l'apprentissage, la réflexion ou l'écoute du vidéo dans une autre langue, les habitudes matinales favorisent la croissance personnelle.</p>
                 <label htmlFor="morningHabit">Votre habitude du matin : </label>
-                <input type="text" id='morningHabit' name='morningHabit' onChange={(e) => handleChange(e.target.name, e.target.value)} />
+                <input type="text" id='morningHabit' name='morningHabit' onChange={(e) => handleChange(e.target.name, e.target.value)} required />
 
                 <h2>Habitude du soir</h2>
                 <p><b>L'occasion de vous préparer à dormir.</b> Une routine nocturne bien planifiée signale à votre corps qu'il est temps de se détendre et de se préparer à dormir. Cela favorise un sommeil de meilleure qualité. Alors prevoyez une activitez ne faisant appelle qu'à un seul sens comme la lecture, ou l'écoute d'un podcast.</p>
                 <label htmlFor="eveningHabit">Votre habitude du soir : </label>
-                <input type="text" id='eveningHabit' name='eveningHabit' onChange={(e) => handleChange(e.target.name, e.target.value)} />
+                <input type="text" id='eveningHabit' name='eveningHabit' onChange={(e) => handleChange(e.target.name, e.target.value)} required />
 
                 <div>
                     <input type="checkbox" required />
@@ -132,7 +209,7 @@ const create = () => {
                 <h2>Choisissez un nom pour votre routine.</h2>
                 <p>Un nom peut transformer votre routine en un rituel personnel. Les rituels ont une signification et une symbolique profondes, ce qui peut rendre vos activités quotidiennes plus significatives et satisfaisantes.</p>
                 <label htmlFor="name">Le nom de ma routine : </label>
-                <input type="text" id='name' name='name' onChange={(e) => handleChange(e.target.name, e.target.value)} />
+                <input type="text" id='name' name='name' onChange={(e) => handleChange(e.target.name, e.target.value)} required />
                 <div><button type='submit'>Créer ma routine</button></div>
 
             </form>
