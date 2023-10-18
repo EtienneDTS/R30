@@ -3,6 +3,7 @@ import { NoteSelector } from '@/components/NoteSelector/NoteSelector';
 import { ObjectivesList } from '@/components/ObjectivesList/ObjectivesList';
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react';
+import style from "@/styles/routine/create.module.scss"
 
 const create = () => {
 
@@ -97,13 +98,13 @@ const create = () => {
             const currentDatePlus30Days = new Date()
             currentDatePlus30Days.setDate(currentDatePlus30Days.getDate() + 30)
 
-            const dates = {currentDate, currentDatePlus30Days}
+            const dates = { currentDate, currentDatePlus30Days }
             console.log(currentDate)
 
             fetchFormData(formData, userID, dates)
                 .then((result) => {
                     if (result.success) {
-                        
+
                         console.log("Requête réussie", result.data);
                     } else {
                         console.log(result.error);
@@ -124,9 +125,10 @@ const create = () => {
     }
 
     return (
-        <div>
-            <h1>Définir les objectifs du mois</h1>
-            <form action="" method='POST' onSubmit={(e) => handleSubmit(e)}>
+        <div className={style.container} >
+
+            <form className={style.formContainer} action="" method='POST' onSubmit={(e) => handleSubmit(e)}>
+                <h1>Définir les objectifs du mois</h1>
                 <p>Définir des objectifs mensuels est le meilleur moyen d'atteindre vos rêves et l'occasion de suivre votre progression. </p>
                 <p>Il peut parfois être difficile de décider par où commencer. Voici quelques astuces pour vous aider à définir vos 5 objectifs du mois avec succès :</p>
 
@@ -179,11 +181,12 @@ const create = () => {
                         <h4>Pourquoi voulez-vous avoir un impact positif grâce à la réalisation de ces objectifs personnels ?</h4>
                         <p>Parce que je trouve du sens et de la satisfaction dans la croissance personnelle et la contribution au bien-être collectif.</p>
                     </li>
-                    <div>
-                        <label htmlFor="why">Maintenant definissez votre pourquoi</label>
-                        <input type="text" id='why' name='why' placeholder='Trouver le One Piece et devenir le roi des pirates' onChange={(e) => handleChange(e.target.name, e.target.value)} required />
-                    </div>
                 </ul>
+                <div>
+                    <label htmlFor="why">Maintenant definissez votre pourquoi</label>
+                    <input type="text" id='why' name='why' placeholder='Trouver le One Piece et devenir le roi des pirates' onChange={(e) => handleChange(e.target.name, e.target.value)} required />
+                </div>
+
 
                 <h2>Maintenant pour chacun des objectifs attribuez un ordre de priorité. (1 étant l'objectif le plus important) </h2>
                 <NoteSelector data={formData} handleFunction={handleChange} />

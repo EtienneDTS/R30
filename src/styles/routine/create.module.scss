@@ -1,0 +1,129 @@
+$maincolor : #9a0505;
+$testColor: #ff5733;
+
+.container {
+    width: 100%;
+    height: 100%;
+    background-image: url('/pexels-phil-kallahar-983200.jpg'); 
+    background-size: cover; 
+    background-repeat: no-repeat;
+    margin: 0;
+    position: relative; 
+    overflow: hidden;
+}
+
+.formContainer {
+    max-width: 800px;
+    margin: 140px auto 40px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.5); 
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.formContainer h1 {
+    font-size: 2.5rem;
+    margin: 20px 0;
+    color: $maincolor; 
+    font-weight: bold;
+}
+
+.formContainer h2 {
+    font-size: 1.8rem;
+    margin: 20px 0;
+    color: #333;
+}
+
+.formContainer p {
+    margin: 10px 0;
+    font-size: 1.2rem;
+    color: #444;
+}
+
+.formContainer ol {
+    margin-left: 20px;
+    list-style: decimal;
+}
+
+.formContainer ul {
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    list-style: none;
+}
+
+.formContainer li {
+    margin: 10px 0;
+    font-size: 1.1rem;
+    color: #444;
+}
+
+.formContainer label {
+    font-weight: bold;
+    color: #444;
+}
+
+.formContainer input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.formContainer input[type="text"]:focus {
+    border: $maincolor;
+}
+
+.formContainer button {
+    background-color: $maincolor; 
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 15px 0;
+    transition: background-color 0.3s;
+}
+
+.formContainer button:hover {
+    background-color: $maincolor; /* Couleur rouge-orangé */
+}
+
+.formContainer input[type='checkbox'] {
+    margin-right: 10px;
+    background-color: $maincolor;
+}
+
+.formContainer input[type="checkbox"]:checked {
+    opacity: 1;
+    background-color: $maincolor;
+  }
+
+.formContainer select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.formContainer select option {
+    font-size: 1rem;
+    background-color: #fff;
+    color: #333;
+    transition: background-color 0.3s;
+}
+
+.formContainer select option:hover {
+    background-color: $maincolor; 
+    color: #fff;
+}

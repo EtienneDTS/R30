@@ -1,13 +1,17 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from "../../../db";
-import { escape } from 'querystring';
+
 
 export default async function createRoutine(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
 
-        
-
         const data = req.body.formData
+        for (const key in data) {
+            if (typeof data[key] === 'string' && data[key] === '') {
+                data[key] = null;
+            }
+        }
+
         data.id = req.body.userID
         data.currentDate = req.body.dates.currentDate
         data.dateEnd = req.body.dates.currentDatePlus30Days
@@ -29,7 +33,7 @@ export default async function createRoutine(req: NextApiRequest, res: NextApiRes
 
         if (currentUserRoutine) {
             return res.status(400).json({ success: false, error: "Une routine est en cour." });
-        } 
+        }
 
 
         let newObjectives;
@@ -55,9 +59,11 @@ export default async function createRoutine(req: NextApiRequest, res: NextApiRes
             return res.status(404).json({ success: false, error: "La création des objectifs à échoué" });
         }
 
+        let newRoutine
+
         try {
-            
-            const newRoutine = await prisma.routine.create({
+
+            newRoutine = await prisma.routine.create({
                 data: {
                     name: data.name,
                     dateStart: data.currentDate,
@@ -68,8 +74,29 @@ export default async function createRoutine(req: NextApiRequest, res: NextApiRes
                 }
             })
 
+
         } catch (error) {
+            await prisma.objectives.delete({ where: { id: newObjectives.id } })
             return res.status(500).json({ success: false, error: "Erreur interne du serveur" })
+        }
+
+
+        let dailyDate: Date = new Date(data.currentDate)
+        for (let i = 0; i < 30; i++) {
+            dailyDate.setDate(dailyDate.getDate() + i)
+            try {
+                await prisma.dailyForm.create({
+                    data: {
+                        date: dailyDate,
+                        dayNumber: i + 1,
+                        routineId: newRoutine.id
+                    }
+                })
+            } catch (error) {
+                await prisma.objectives.delete({ where: { id: newObjectives.id } })
+                return res.status(404).json({ success: false, error: "La création des formulaires à échoué" });
+            }
+
         }
 
         res.json({ success: true, message: "Requête réussie" });

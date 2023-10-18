@@ -47,13 +47,13 @@ model Routine {
   dateStart    DateTime    @db.Date
   dateEnd      DateTime    @db.Date
   finished     Boolean     @default(false)
-  objectives   Objectives? @relation(fields: [objectivesId], references: [id])
+  objectives   Objectives? @relation(fields: [objectivesId], references: [id],onDelete: Cascade)
   objectivesId Int?        @unique
   why          String
-  user         User        @relation(fields: [userId], references: [id])
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       Int
 
-  dailyForm DailyForm?
+  dailyForm   DailyForm[] 
 }
 
 model DailyForm {
@@ -77,7 +77,7 @@ model DailyForm {
   bedtimeHour  DateTime? @db.Time
   morningHabit Boolean   @default(false)
   eveningHabit Boolean   @default(false)
-  routine      Routine   @relation(fields: [routineId], references: [id])
-  routineId    Int       @unique
+  routine      Routine   @relation(fields: [routineId], references: [id], onDelete: Cascade)
+  routineId    Int       
   rightPath    Boolean?  @default(false)
 }

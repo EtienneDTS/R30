@@ -1,0 +1,18 @@
+.selector {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+.selector option {
+    font-size: 1rem;
+    background-color: #fff;
+  }
+  
+.selector option:hover {
+    background-color: #007bff;
+    color: #fff;
+  }

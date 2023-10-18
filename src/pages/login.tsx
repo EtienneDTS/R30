@@ -15,7 +15,6 @@ type LogInProps = {
 const login: React.FC<LogInProps> = () => {
 
     const { data: session } = useSession()
-    console.log(session)
     const router = useRouter()
 
 
