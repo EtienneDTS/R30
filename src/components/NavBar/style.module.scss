@@ -4,7 +4,9 @@
     z-index: 100;
     height: 80px;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0);
+    font-family: 'Tangerine', cursive;
+    font-size: 22px;
 
 }
 
@@ -13,7 +15,7 @@
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     list-style-type: none;
 
 }
@@ -33,4 +35,68 @@
 .link {
     text-decoration: none;
     color: white;
+}
+
+.linkBox {
+    display: flex;
+    margin: 0 20px;
+    align-items: center;
+    
+}
+
+.linkBox div {
+    margin: 0 20px;
+    cursor: pointer;
+}
+
+.logoContainer {
+    margin: 0 20px;
+}
+
+.options {
+    position: absolute;
+    background: url("/parchemin.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: -45px -10px;
+    z-index: 1000;
+    height: 400px;
+    width: 300px;
+    right: 10px;
+    top: 80px;
+    transform: translateY(-200%);
+    transition: transform 0.5s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.options.visible {
+    transform: translateY(0); /* Les éléments descendent lorsqu'ils sont visibles */
+    opacity: 1; /* Les éléments deviennent visibles */
+  }
+
+.parchment {
+    position: relative;
+    margin-top: 70px;
+    margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 250px;
+}
+
+.parchment div {
+    display: flex;
+    cursor: pointer;
+    
+}
+
+.parchment div p {
+    margin-left: 10px;
+    
+}
+
+.parchmentLink {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+
 }
