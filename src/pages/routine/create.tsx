@@ -136,19 +136,19 @@ const create = () => {
 
                 <ol>
                     <li>
-                        <b>Spécifique :</b>Lorsque vous définissez un objectif, assurez-vous qu'il soit spécifique et clair. Évitez les objectifs vagues comme "être plus actif physiquement" et optez plutôt pour quelque chose de plus précis comme "Faire du Tennis". Plus votre objectif est précis, plus il sera facile de suivre votre progression.
+                        <b>Spécifique :  </b>Lorsque vous définissez un objectif, assurez-vous qu'il soit spécifique et clair. Évitez les objectifs vagues comme "être plus actif physiquement" et optez plutôt pour quelque chose de plus précis comme "Faire du Tennis". Plus votre objectif est précis, plus il sera facile de suivre votre progression.
                     </li>
                     <li>
-                        <b>Mesurable : </b>Assurez-vous que vos objectifs puissent être mesurés. Par exemple, plutôt que de dire simplement "Faire du Tenis", fixez-vous l'objectif de "Faire du Tenis 3 fois par semaine pendant 1h".
+                        <b>Mesurable :  </b>Assurez-vous que vos objectifs puissent être mesurés. Par exemple, plutôt que de dire simplement "Faire du Tenis", fixez-vous l'objectif de "Faire du Tenis 3 fois par semaine pendant 1h".
                     </li>
                     <li>
-                        <b>Atteignable :</b> Vos objectifs doivent être réalistes et réalisables dans le délai d'un mois.
+                        <b>Atteignable :  </b> Vos objectifs doivent être réalistes et réalisables dans le délai d'un mois.
                     </li>
                     <li>
-                        <b>Relevant :</b> Vos objectifs devraient être pertinents par rapport à ce que vous souhaitez accomplir à long terme. Mesurez, découpez, quelles sont vos objectifs dans les 10 prochaines années ? Pour les atteindres quelle est la priorité cette année ? Mainteant découpez les en mois, et maintenant en maximum 5 objectifs pour réussir ce mois.
+                        <b>Relevant :  </b> Vos objectifs devraient être pertinents par rapport à ce que vous souhaitez accomplir à long terme. Mesurez, découpez, quelles sont vos objectifs dans les 10 prochaines années ? Pour les atteindres quelle est la priorité cette année ? Mainteant découpez les en mois, et maintenant en maximum 5 objectifs pour réussir ce mois.
                     </li>
                     <li>
-                        <b>Temporel :</b> Maintenant vous disposez d'un mois pour les accomplir
+                        <b>Temporel :  </b> Maintenant vous disposez d'un mois pour les accomplir
                     </li>
                 </ol>
 
@@ -211,7 +211,7 @@ const create = () => {
 
                 <h2>Choisissez un nom pour votre routine.</h2>
                 <p>Un nom peut transformer votre routine en un rituel personnel. Les rituels ont une signification et une symbolique profondes, ce qui peut rendre vos activités quotidiennes plus significatives et satisfaisantes.</p>
-                <label htmlFor="name">Le nom de ma routine : </label>
+                <label htmlFor="name">Le nom de votre routine : </label>
                 <input type="text" id='name' name='name' onChange={(e) => handleChange(e.target.name, e.target.value)} required />
                 <div><button type='submit'>Créer ma routine</button></div>
 

@@ -1,3 +1,8 @@
+$brownColor: #6E401A;
+$hoverCursor: url("/cursor/4653.png"), auto;
+$cursor: url("/cursor/22284.png"), auto;
+$textCursor: url("/cursor/68287.png"), auto;
+
 .navBar {
     position: fixed;
     top: 0;
@@ -5,10 +10,12 @@
     height: 80px;
     width: 100%;
     background-color: rgba(255, 255, 255, 0);
-    font-family: 'Tangerine', cursive;
+    font-family: 'MedievalSharp', cursive;
+    color: $brownColor;
     font-size: 22px;
-
+    cursor: $cursor;
 }
+
 
 .navBar ul {
     width: 100%;
@@ -25,28 +32,36 @@
 }
 
 .image {
-    border-radius: 50px;
+    
+    cursor: $hoverCursor;
+}
+
+.logoContainer {
+    cursor: $hoverCursor;
 }
 
 .icon {
     border-radius: 0;
+    
 }
 
 .link {
     text-decoration: none;
     color: white;
+    cursor: $hoverCursor;
 }
 
 .linkBox {
     display: flex;
     margin: 0 20px;
     align-items: center;
-    
+    cursor: $hoverCursor;
+
 }
 
 .linkBox div {
     margin: 0 20px;
-    cursor: pointer;
+    
 }
 
 .logoContainer {
@@ -66,12 +81,15 @@
     top: 80px;
     transform: translateY(-200%);
     transition: transform 0.5s ease-in-out, opacity 0.3s ease-in-out;
+    cursor: $hoverCursor;
 }
 
 .options.visible {
-    transform: translateY(0); /* Les éléments descendent lorsqu'ils sont visibles */
-    opacity: 1; /* Les éléments deviennent visibles */
-  }
+    transform: translateY(0);
+    /* Les éléments descendent lorsqu'ils sont visibles */
+    opacity: 1;
+    /* Les éléments deviennent visibles */
+}
 
 .parchment {
     position: relative;
@@ -81,22 +99,30 @@
     flex-direction: column;
     justify-content: space-between;
     height: 250px;
+    text-align: center;
+    
 }
 
 .parchment div {
     display: flex;
-    cursor: pointer;
-    
+
 }
 
 .parchment div p {
     margin-left: 10px;
-    
+
 }
 
 .parchmentLink {
     text-decoration: none;
     color: inherit;
-    cursor: pointer;
+    cursor: $hoverCursor;
+    
 
 }
+
+.blade {
+    padding-bottom: 15px;
+}
+
+

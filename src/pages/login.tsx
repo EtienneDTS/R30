@@ -30,7 +30,7 @@ const login: React.FC<LogInProps> = () => {
 
 
     return (
-        <div>
+        <div className={style.main}>
             <div className={style.container}>
                 <h1>Me connecter</h1>
                 <GoogleButton
