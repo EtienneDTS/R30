@@ -21,7 +21,7 @@ const login: React.FC<LogInProps> = () => {
 
     async function handleClick(provider: string) {
         signIn(provider)
-        console.log(session)
+        
         if (session) {
             router.push("/")
         }
@@ -32,14 +32,20 @@ const login: React.FC<LogInProps> = () => {
     return (
         <div className={style.main}>
             <div className={style.container}>
-                <h1>Me connecter</h1>
-                <GoogleButton
-                    onClick={() => handleClick("google")}
-                    type={"light"}
-                />
+                <div className={style.title}>Connexion</div>
+                <div className={style.btn}>
+                    <div className={style.googleBtn}>
+                        <GoogleButton
+                            onClick={() => handleClick("google")}
+                            type={"dark"}
+                         />
+                    </div>
+
+                </div>
+
 
             </div>
-            <button onClick={()=>signOut()}>deconnecter</button>
+
 
         </div>
     );
