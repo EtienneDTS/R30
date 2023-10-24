@@ -44,10 +44,11 @@ export default NextAuth({
           },
         });
 
+        let userName
         if (!signUser) {
           if (sessionUser.firstName || sessionUser.lastName) {
-            const userName = `${sessionUser.firstName} ${sessionUser.lastName.charAt(0)}`;
-          } else { const userName = "Anonyme"; }
+            userName = `${sessionUser.firstName} ${sessionUser.lastName.charAt(0)}`;
+          } else { userName = "Anonyme"; }
 
           try {
             const newUser = await prisma.user.create({

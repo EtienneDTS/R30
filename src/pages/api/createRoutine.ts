@@ -83,7 +83,7 @@ export default async function createRoutine(req: NextApiRequest, res: NextApiRes
 
         let dailyDate: Date = new Date(data.currentDate)
         for (let i = 0; i < 30; i++) {
-            dailyDate.setDate(dailyDate.getDate() + i)
+            dailyDate.setDate(dailyDate.getDate() + 1)
             try {
                 await prisma.dailyForm.create({
                     data: {

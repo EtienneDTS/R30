@@ -48,7 +48,7 @@ model Routine {
   dateEnd      DateTime    @db.Date
   finished     Boolean     @default(false)
   objectives   Objectives? @relation(fields: [objectivesId], references: [id],onDelete: Cascade)
-  objectivesId Int?        @unique
+  objectivesId Int        @unique
   why          String
   user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       Int
