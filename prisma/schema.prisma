@@ -47,37 +47,46 @@ model Routine {
   dateStart    DateTime    @db.Date
   dateEnd      DateTime    @db.Date
   finished     Boolean     @default(false)
-  objectives   Objectives? @relation(fields: [objectivesId], references: [id],onDelete: Cascade)
-  objectivesId Int        @unique
+  objectives   Objectives? @relation(fields: [objectivesId], references: [id], onDelete: Cascade)
+  objectivesId Int         @unique
   why          String
   user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       Int
 
-  dailyForm   DailyForm[] 
+  dailyForm DailyForm[]
 }
 
 model DailyForm {
-  id           Int       @id @default(autoincrement())
-  dayNumber    Int
-  diary        String?
-  todo1        String?
-  todo2        String?
-  todo3        String?
-  todo4        String?
-  todo5        String?
-  todoChecked1 Boolean   @default(false)
-  todoChecked2 Boolean   @default(false)
-  todoChecked3 Boolean   @default(false)
-  todoChecked4 Boolean   @default(false)
-  todoChecked5 Boolean   @default(false)
-  todoPriority String?
-  date         DateTime  @db.Date
-  dayRating    Int       @default(0)
-  wakingUpHour DateTime? @db.Time
-  bedtimeHour  DateTime? @db.Time
-  morningHabit Boolean   @default(false)
-  eveningHabit Boolean   @default(false)
-  routine      Routine   @relation(fields: [routineId], references: [id], onDelete: Cascade)
-  routineId    Int       
-  rightPath    Boolean?  @default(false)
+  id              Int       @id @default(autoincrement())
+  dayNumber       Int
+  diary           String?
+  todo1           String?
+  todo2           String?
+  todo3           String?
+  todo4           String?
+  todo5           String?
+  todoChecked1    Boolean   @default(false)
+  todoChecked2    Boolean   @default(false)
+  todoChecked3    Boolean   @default(false)
+  todoChecked4    Boolean   @default(false)
+  todoChecked5    Boolean   @default(false)
+  todoPriority    String?
+  notTodo1        String?
+  notTodo2        String?
+  notTodo3        String?
+  notTodoChecked1 Boolean   @default(false)
+  notTodoChecked2 Boolean   @default(false)
+  notTodoChecked3 Boolean   @default(false)
+  gratitude1      String?
+  gratitude2      String?
+  gratitude3      String?
+  date            DateTime  @db.Date
+  dayRating       Int       @default(1)
+  wakingUpHour    DateTime? @db.Time
+  bedtimeHour     DateTime? @db.Time
+  morningHabit    Boolean   @default(false)
+  eveningHabit    Boolean   @default(false)
+  routine         Routine   @relation(fields: [routineId], references: [id], onDelete: Cascade)
+  routineId       Int
+  rightPath       Boolean?  @default(false)
 }

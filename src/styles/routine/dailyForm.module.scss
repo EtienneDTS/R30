@@ -1,0 +1,234 @@
+$maincolor : #9a0505;
+$maincolorHover : #840000;
+$testColor: #ff5733;
+$inputColor: #d3d2d242;
+$highlightColor: #fdd544;
+$brownColor: #6E401A;
+$hoverCursor: url("/cursor/4653.png"), auto;
+$cursor: url("/cursor/22284.png"), auto;
+$textCursor: url("/cursor/68287.png"), auto;
+
+.container {
+    width: 100%;
+    height: 100%;
+    background-image: url('/artMedieval.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+    cursor: $cursor;
+}
+
+.formContainer {
+    width: 80%;
+    margin: 70px auto 40px auto;
+    padding: 20px;
+    background-color: #F5E0AB;
+    font-family: 'MedievalSharp', cursive;
+    color: $brownColor;
+    overflow: auto;
+    border: solid 8px #6E401A;
+}
+
+.banner {
+    display: flex;
+    align-items: center;
+
+}
+
+.banner div {
+    margin: 20px;
+    font-size: 30px;
+}
+
+.formContainer h1 {
+    font-size: 2.5rem;
+    margin: 20px 0;
+    color: $maincolor;
+    font-weight: bold;
+}
+
+.formContainer h2 {
+    font-size: 1.8rem;
+    margin: 20px 0;
+    color: $brownColor;
+    
+}
+.formContainer h4 {
+    background-color: $highlightColor;
+    margin: 20px 0;
+    color: $brownColor;
+}
+.formContainer b {
+    background-color: $highlightColor;
+    margin: 20px 0;
+    color: $brownColor;
+}
+
+.formContainer p {
+    margin: 10px 0;
+    font-size: 1.2rem;
+    color: $brownColor;
+}
+
+.formContainer ol {
+    margin-left: 20px;
+    list-style: decimal;
+}
+
+.formContainer ul {
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    list-style: none;
+}
+
+.formContainer li {
+    margin: 10px 0;
+    font-size: 1.1rem;
+    color: $brownColor;
+}
+
+.formContainer label {
+    font-weight: bold;
+    color: $brownColor;
+    text-decoration: underline;
+    cursor: $cursor;
+}
+
+.formContainer input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    margin: 5px 0;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: $brownColor;
+    background-color: $inputColor;
+    font-family: 'Tangerine', cursive;
+    cursor: $textCursor;
+}
+
+.formContainer input[type="text"]:focus {
+    outline-color: $maincolor;
+    outline-style: solid;
+    outline-width: 1px;
+    cursor: $textCursor;
+}
+.formContainer input[type="text"]:active {
+    cursor: $textCursor;
+}
+
+
+
+.formContainer button {
+    background-color: #F2D99C;
+    color: $brownColor;
+    padding: 12px 24px;
+    border: 2px $brownColor solid;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-family: 'MedievalSharp', cursive;
+    font-weight: bold;
+    margin: 15px 0;
+    transition: background-color 0.3s;
+}
+
+.formContainer button:hover {
+    background-color: #edcd82;
+    cursor: $hoverCursor;
+}
+
+.formContainer input[type="checkbox"] {
+    
+    margin: 10px;
+    
+}
+.formContainer input[type="checkbox"]::before {
+    content: "";
+    background-color: rgb(219, 201, 181);
+    display: block;
+    width: 14px;
+    height: 14px;
+    border: solid 1px;
+    border-radius: 3px;
+    cursor: $hoverCursor;
+    
+}
+
+.formContainer input[type="checkbox"]:checked::before {
+    content: "✔"; 
+    padding-left: 3px;
+    width: 11px;
+    cursor: $hoverCursor;
+}
+
+.formContainer select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #333;
+    background-color: $inputColor;
+    font-family: 'Tangerine', cursive;
+    cursor: $hoverCursor;
+    
+}
+.formContainer select:focus {
+    outline-color: $maincolor;
+    outline-style: solid;
+    outline-width: 1px;
+}
+
+.formContainer select option {
+    font-size: 1rem;
+    background-color: #fff;
+    color: #333;
+    transition: background-color 0.3s;
+}
+
+.formContainer select option:hover {
+    background-color: $maincolor;
+    color: #fff;
+}
+
+.formContainer textarea {
+    width: 100%;
+    height: 400px;
+    padding: 12px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: solid;
+    font-size: 1rem;
+    color: $brownColor;
+    background-color: $inputColor;
+    font-family: 'Tangerine', cursive;
+    cursor: $textCursor;
+    resize: none;
+}
+.formContainer textarea:focus {
+    outline-color: $maincolor;
+    outline-style: solid;
+    outline-width: 1px;
+    cursor: $textCursor;
+}
+.formContainer textarea:active {
+    cursor: $textCursor;
+}
+
+@media (max-width: 425px) {
+    .formContainer {
+        width: 90%;
+    }
+}
+
+
+
+
+
+@media (max-width: 425px) {
+    .formContainer {
+        width: 90%;
+    }
+}

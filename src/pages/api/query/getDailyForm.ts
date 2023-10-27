@@ -5,9 +5,7 @@ import { prisma } from "../../../../db"
 
 export default async function getDailyForm(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
-        console.log("on est la")
         const data = req.body
-
         let dailyForm
         let user
         let routine

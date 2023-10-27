@@ -1,0 +1,30 @@
+$maincolor : #9a0505;
+$maincolorHover : #840000;
+$testColor: #ff5733;
+$inputColor: #d3d2d242;
+$highlightColor: #fdd544;
+$brownColor: #6E401A;
+$hoverCursor: url("/cursor/4653.png"), auto;
+$cursor: url("/cursor/22284.png"), auto;
+$textCursor: url("/cursor/68287.png"), auto;
+
+.container {
+    width: 80%;
+}
+
+.numberContainer{
+    display: flex;
+    color: $brownColor;
+}
+
+.numberContainer div {
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    line-height: 30px;
+}
+
+.selected {
+    border: solid 2px $brownColor;
+    border-radius: 50%;
+}
