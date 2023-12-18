@@ -1,7 +1,6 @@
 import React from 'react';
 import style from '../styles/login.module.scss'
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
 import { signIn, signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -40,13 +39,8 @@ const login: React.FC<LogInProps> = () => {
                             type={"dark"}
                          />
                     </div>
-
                 </div>
-
-
             </div>
-
-
         </div>
     );
 };

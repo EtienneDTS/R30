@@ -99,7 +99,6 @@ const create = () => {
             currentDatePlus30Days.setDate(currentDatePlus30Days.getDate() + 30)
 
             const dates = { currentDate, currentDatePlus30Days }
-            console.log(currentDate)
 
             fetchFormData(formData, userID, dates)
                 .then((result) => {

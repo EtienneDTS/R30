@@ -81,7 +81,7 @@ model DailyForm {
   gratitude2      String?
   gratitude3      String?
   date            DateTime  @db.Date
-  dayRating       Int       @default(1)
+  dayRating       Int       @default(0)
   wakingUpHour    DateTime? @db.Time
   bedtimeHour     DateTime? @db.Time
   morningHabit    Boolean   @default(false)

@@ -6,13 +6,13 @@ import { useSession } from 'next-auth/react';
 import { allDataType } from '../../../../../types/types';
 import { ObjectivesList } from '@/components/ObjectivesList/ObjectivesList';
 import { TimeSelector } from '@/components/TimeSelector/TimeSelector';
-import { format } from 'date-fns'
+import { format, setDate } from 'date-fns'
 import { DayRating } from '@/components/DayRating/DayRating';
 
 const dailyForm = () => {
 
-
-
+    const [twoDayAfter, setTwoDayAfter] = useState(false)
+    const currentDate = new Date()
     const router = useRouter()
     const { data: session } = useSession()
     const [allData, setAllData] = useState<null | allDataType>(null)
@@ -39,8 +39,6 @@ const dailyForm = () => {
         todo4: "",
         todo5: "",
     })
-
-
 
     async function fetchDailyForm() {
         const dataToFetch = {
@@ -83,13 +81,23 @@ const dailyForm = () => {
                 fetchDailyForm()
 
             }
-
         }
-
     }, [session, router])
 
     useEffect(() => {
         console.log("blabla", allData)
+        console.log(typeof allData?.dailyForm.date)
+        if (typeof allData?.dailyForm.date !== "undefined") {
+            const date = new Date(allData.dailyForm.date)
+            const datePlus2 = new Date(date)
+            datePlus2.setDate(date.getDate() + 2)
+            if (currentDate > datePlus2) {
+                setTwoDayAfter(true)
+            }
+        }
+
+
+
     }, [allData])
 
 
@@ -103,13 +111,27 @@ const dailyForm = () => {
         }
     }
 
+    function handleSubmit(e: any) {
+        e.preventDefault()
+        console.log(formData)
+        if (session) {
+            const dataToFetch = {
+                formData: formData,
+                date: router.query.date,
+                routineId: router.query.routineId,
+                userId: session?.session.user.id
+            }
+        }
+
+    }
+
 
 
 
     return (
         <div className={style.container}>
             {allData &&
-                <form action="" className={style.formContainer}>
+                <form action="" className={style.formContainer} onSubmit={(e) => handleSubmit(e)}>
                     <div className={style.banner}>
                         <h1>Jour {allData.dailyForm.dayNumber}</h1>
                         <div className={style.date}>{format(new Date(allData.dailyForm.date), 'dd/MM/yyyy')}</div>
@@ -123,8 +145,12 @@ const dailyForm = () => {
                                 <input type="checkbox" name='morningHabit' id='morningHabit' onChange={(e) => handleChange(e.target.name, e.target.value)} defaultChecked={allData.dailyForm.morningHabit} />
                             </div>
                             <div>
-                                <label htmlFor="wakingUpHour">Heure du réveil</label>
-                                <TimeSelector name={"wakingUpHour"} handleFunction={handleChange} />
+                                <label htmlFor="wakingUpHour">Heure du réveil </label>
+                                {allData.dailyForm.wakingUpHour !== null && <span>{allData.dailyForm.wakingUpHour.getTime()}</span>}
+                                {!twoDayAfter &&
+                                    <TimeSelector name={"wakingUpHour"} handleFunction={handleChange} />
+                                }
+
                             </div>
                         </div>
                         <div>
@@ -133,8 +159,12 @@ const dailyForm = () => {
                                 <input type="checkbox" name='eveningHabit' id='eveningHabit' onChange={(e) => handleChange(e.target.name, e.target.value)} defaultChecked={allData.dailyForm.eveningHabit} />
                             </div>
                             <div>
-                                <label htmlFor="wakingUpHour">Heure d'extinction des feux ce soir</label>
-                                <TimeSelector name={"bedtimeHour"} handleFunction={handleChange} />
+                                <label htmlFor="bedtimeHour">Heure d'extinction des feux ce soir </label>
+                                {allData.dailyForm.bedtimeHour !== null && <span>{allData.dailyForm.bedtimeHour.getTime()}</span>}
+                                {!twoDayAfter &&
+                                    <TimeSelector name={"bedtimeHour"} handleFunction={handleChange} />
+                                }
+
                             </div>
 
                         </div>
@@ -150,7 +180,6 @@ const dailyForm = () => {
                                 allData.dailyForm.todo3 ||
                                 allData.dailyForm.todo4 ||
                                 allData.dailyForm.todo5
-
                                 ?
                                 <div>
                                     <div>
@@ -184,9 +213,9 @@ const dailyForm = () => {
                         <div>
                             <h3>Les choses à ne pas faire aujourd'hui</h3>
                             <div>
-                                <input type="checkbox" defaultChecked={allData.dailyForm.notTodoChecked1} name='notTodoChecked1' onChange={(e) => handleChange(e.target.name, e.target.value)} />
-                                <input type="checkbox" defaultChecked={allData.dailyForm.notTodoChecked2} name='notTodoChecked2' onChange={(e) => handleChange(e.target.name, e.target.value)} />
-                                <input type="checkbox" defaultChecked={allData.dailyForm.notTodoChecked3} name='notTodoChecked3' onChange={(e) => handleChange(e.target.name, e.target.value)} />
+                                <input type="checkbox" defaultChecked={allData.dailyForm.notTodoChecked1} name='notTodoChecked1' onChange={(e) => handleChange(e.target.name, e.target.value)} readOnly={twoDayAfter} />
+                                <input type="checkbox" defaultChecked={allData.dailyForm.notTodoChecked2} name='notTodoChecked2' onChange={(e) => handleChange(e.target.name, e.target.value)} readOnly={twoDayAfter} />
+                                <input type="checkbox" defaultChecked={allData.dailyForm.notTodoChecked3} name='notTodoChecked3' onChange={(e) => handleChange(e.target.name, e.target.value)} readOnly={twoDayAfter} />
                             </div>
                             <div>
                                 <div>{allData.dailyForm.notTodo1}</div>
@@ -202,15 +231,15 @@ const dailyForm = () => {
                         <div>
                             <div>
                                 <label htmlFor="gratitude1">Je suis reconnaissant pour:</label>
-                                <input type="text" value={allData.dailyForm.gratitude1} name='gratitude1' id='gratitude1' onChange={(e) => handleChange(e.target.name, e.target.value)} />
+                                <input type="text" value={allData.dailyForm.gratitude1} name='gratitude1' id='gratitude1' onChange={(e) => handleChange(e.target.name, e.target.value)} readOnly={twoDayAfter} />
                             </div>
                             <div>
                                 <label htmlFor="gratitude2">Je suis reconnaissant pour:</label>
-                                <input type="text" value={allData.dailyForm.gratitude2} name='gratitude2' id='gratitude2' onChange={(e) => handleChange(e.target.name, e.target.value)} />
+                                <input type="text" value={allData.dailyForm.gratitude2} name='gratitude2' id='gratitude2' onChange={(e) => handleChange(e.target.name, e.target.value)} readOnly={twoDayAfter} />
                             </div>
                             <div>
                                 <label htmlFor="gratitude3">Je suis reconnaissant pour:</label>
-                                <input type="text" value={allData.dailyForm.gratitude3} name='gratitude3' id='gratitude3' onChange={(e) => handleChange(e.target.name, e.target.value)} />
+                                <input type="text" value={allData.dailyForm.gratitude3} name='gratitude3' id='gratitude3' onChange={(e) => handleChange(e.target.name, e.target.value)} readOnly={twoDayAfter} />
                             </div>
                         </div>
                     </div>
@@ -222,7 +251,7 @@ const dailyForm = () => {
                     </div>
                     <div>
                         <label htmlFor="rightPath">Etes-vous honnêtement en train d'accomplir vos objectifs ?</label>
-                        <input type="checkbox" defaultChecked={allData.dailyForm.rightPath} name='rightPath' onChange={(e) => handleChange(e.target.name, e.target.value)} />
+                        <input type="checkbox" defaultChecked={allData.dailyForm.rightPath} name='rightPath' onChange={(e) => handleChange(e.target.name, e.target.value)} disabled={twoDayAfter} />
                     </div>
                     <div>
                         <h2>Journal du jour</h2>
@@ -231,34 +260,56 @@ const dailyForm = () => {
                             name="diary"
                             defaultValue={allData.dailyForm.diary ? allData.dailyForm.diary : ""}
                             onChange={(e) => handleChange(e.target.name, e.target.value)}
+                            readOnly={twoDayAfter}
+
                         />
                     </div>
-                    <div>
-                        <h2>Plannifiez vos actions de demain</h2>
+                    {!twoDayAfter &&
                         <div>
+                            <h2>Plannifiez vos actions de demain</h2>
                             <div>
-                                <h3>Les activités de demain</h3>
-                                <ObjectivesList handleFunction={handleChange} label={"Tâche"} name={"todo"} />
-                                <h3>La tâche à faire en priorité demain</h3>
-                                <select name="todoPriority" id="todoPriority">
-                                    <option value={formData.todo1}>{formData.todo1}</option>
-                                    <option value={formData.todo2}>{formData.todo2}</option>
-                                    <option value={formData.todo3}>{formData.todo3}</option>
-                                    <option value={formData.todo4}>{formData.todo4}</option>
-                                    <option value={formData.todo5}>{formData.todo5}</option>
+                                <div>
+                                    <h3>Les activités de demain</h3>
+                                    <ObjectivesList handleFunction={handleChange} label={"Tâche"} name={"todo"} />
+                                    <h3>La tâche à faire en priorité demain</h3>
+                                    <select name="todoPriority" id="todoPriority">
+                                        <option value={formData.todo1}>{formData.todo1}</option>
+                                        <option value={formData.todo2}>{formData.todo2}</option>
+                                        <option value={formData.todo3}>{formData.todo3}</option>
+                                        <option value={formData.todo4}>{formData.todo4}</option>
+                                        <option value={formData.todo5}>{formData.todo5}</option>
 
-                                </select>
+                                    </select>
+                                </div>
+                                <div>
+                                    <h3>Les choses à ne pas faire demain</h3>
+                                    <input
+                                        type="text"
+                                        name='notTodo1'
+                                        onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                    />
+
+                                    <input type="text"
+                                        name='notTodo2'
+                                        onChange={(e) => handleChange(e.target.name, e.target.value)}
+
+                                    />
+
+                                    <input
+                                        type="text"
+                                        name='notTodo3'
+                                        onChange={(e) => handleChange(e.target.name, e.target.value)}
+
+                                    />
+                                </div>
                             </div>
-                            <div>
-                                <h3>Les choses à ne pas faire demain</h3>
-                                <input type="text" name='notTodo1' onChange={(e) => handleChange(e.target.name, e.target.value)} />
-                                <input type="text" name='notTodo2' onChange={(e) => handleChange(e.target.name, e.target.value)} />
-                                <input type="text" name='notTodo3' onChange={(e) => handleChange(e.target.name, e.target.value)} />
-                            </div>
+
                         </div>
+                    }
+                    {!twoDayAfter && <div><button type='submit'>Enregistrer</button></div>}
 
-                    </div>
-                    <div><button type='submit'>Enregistrer</button></div>
+
+
                 </form>
             }
         </div>
